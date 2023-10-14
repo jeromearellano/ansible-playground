@@ -1,0 +1,17 @@
+---
+- name: exercise 01 display hello world on target host
+  hosts: targetplayground
+  become: false
+  gather_facts: false
+  tasks:
+    - name: display text using debug module
+      debug:
+        msg: "Hello World! This is from debug."
+
+    - name: display text from group_vars
+      debug:
+        var: groupVars
+
+    - name: display text from host_vars
+      debug:
+        var: hostVars
