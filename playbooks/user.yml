@@ -1,5 +1,5 @@
 ---
-- name: Add, Check, Change User Password and Remove user on a Remote Server
+- name: exercise 03 Add, Check, Change User Password and Remove user on a Remote Server
   hosts: targetplayground
   become: yes  # Use become to execute tasks with sudo or as root
   gather_facts: false

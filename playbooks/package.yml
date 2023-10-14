@@ -1,5 +1,5 @@
 ---
-- name: Install Apache on Red Hat/CentOS
+- name: exercise 02 Install Apache on Red Hat/CentOS
   hosts: targetplayground
   become: yes  # Use become to execute tasks with sudo or as root
   gather_facts: false
