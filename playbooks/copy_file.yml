@@ -1,0 +1,16 @@
+---
+- name: Copy a Local File to a Remote Server
+  hosts: targetplayground
+  become: yes  # Use become to execute tasks with sudo or as root
+  gather_facts: false
+
+  tasks:
+    - name: Set sudo password
+      set_fact:
+        ansible_become_pass: labuser
+
+    - name: Copy a File
+      copy:
+        src: file.txt  # Specify the source file on your control machine
+        dest: /home/labuser/file.txt  # Specify the destination on the remote server
+      tags: [file_copy]

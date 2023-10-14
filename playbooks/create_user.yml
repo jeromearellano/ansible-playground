@@ -26,10 +26,3 @@
       changed_when: false
       tags: [users]
     
-    - name: Remove User
-      user:
-        name: testuser
-        state: absent  # "absent" means remove the user
-      when: user_check.rc == 0  # User exists, so we can proceed with removal
-      tags: [users]
-    
