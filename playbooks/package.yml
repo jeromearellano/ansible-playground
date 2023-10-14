@@ -1,0 +1,31 @@
+---
+- name: Install Apache on Red Hat/CentOS
+  hosts: targetplayground
+  become: yes  # Use become to execute tasks with sudo or as root
+  gather_facts: false
+  tasks:
+    - name: Set sudo password
+      set_fact:
+        ansible_become_pass: labuser
+
+    - name: Install Apache package
+      yum:
+        name: httpd
+        state: present
+      tags: [packages]
+
+    - name: Start Apache service
+      service:
+        name: httpd
+        state: started
+      tags: [services]
+
+    - name: Check if Apache is installed
+      command: systemctl is-active httpd
+      register: apache_status
+      ignore_errors: yes  # Ignore errors in case Apache is not installed on Red Hat/CentOS systems
+      changed_when: false
+    
+    - name: Display Apache Status
+      debug:
+        msg: "Apache is {{ 'installed' if apache_status.rc == 0 else 'not installed' }}"

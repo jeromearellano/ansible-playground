@@ -1,0 +1,35 @@
+---
+- name: Add, Check, Change User Password and Remove user on a Remote Server
+  hosts: targetplayground
+  become: yes  # Use become to execute tasks with sudo or as root
+  gather_facts: false
+
+  tasks:
+    - name: Set sudo password
+      set_fact:
+        ansible_become_pass: labuser
+
+    - name: Add User
+      user:
+        name: testuser
+        password: "{{ 'testuser' | password_hash('sha512') }}"
+        state: present  # "present" means add the user
+        shell: /bin/bash  # Specify the user's shell (e.g., /bin/bash)
+        groups: wheel  # Add the user to a specific group (e.g., the wheel group)
+        createhome: yes  # Create the user's home directory
+      tags: [users]
+
+    - name: Check if User Exists
+      command: id testuser
+      ignore_errors: yes
+      register: user_check
+      changed_when: false
+      tags: [users]
+    
+    - name: Remove User
+      user:
+        name: testuser
+        state: absent  # "absent" means remove the user
+      when: user_check.rc == 0  # User exists, so we can proceed with removal
+      tags: [users]
+    
