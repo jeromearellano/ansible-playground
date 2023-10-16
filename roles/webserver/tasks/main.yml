@@ -1,27 +1,37 @@
-- name: install "{{ httpd_package }}"
+- name: install {{ httpd_package }}
   package:
     name: "{{ httpd_package }}"
     state: present
 
-- name: start and enable "{{ httpd_package }}"
+- name: start and enable {{ httpd_package }}
   service:
     name: httpd
     state: started
     enabled: yes
 
-- name: install "{{ php_package }}"
+- name: check if {{ httpd_package }} is installed
+  command: systemctl is-active "{{ httpd_package }}"
+  register: http_status
+  ignore_errors: yes  # Ignore errors in case Apache is not installed on Red Hat/CentOS systems
+  changed_when: false
+    
+- name: display {{ httpd_package }} status
+  debug:
+    msg: "{{ httpd_package }} is {{ 'installed' if http_status.rc == 0 else 'not installed' }}"
+
+- name: install {{ php_package }}
   package:
     name: "{{ php_package }}"
     state: present
 
-- name: install "{{ php_package }}" modules
+- name: install {{ php_package }} modules
   package:
     name: "{{ item }}"
     state: present
   with_items: "{{ php_modules }}"
     
 
-- name: restart "{{ httpd_package }}"
+- name: restart {{ httpd_package }}
   service:
     name: "{{ httpd_package }}"
     state: restarted

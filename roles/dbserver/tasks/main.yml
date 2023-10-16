@@ -1,9 +1,9 @@
-- name: install "{{ mysql_package }}"
+- name: install {{ mysql_package }}
   package:
     name: "{{ mysql_package }}"
     state: present
 
-- name: start and enable "{{ mysql_package }}"
+- name: start and enable {{ mysql_package }}
   service:
     name: "{{ mysql_service }}"
     state: started
@@ -13,3 +13,13 @@
   service:
     name: "{{ mysql_service }}"
     state: restarted
+
+- name: check if {{ mysql_service }} is installed
+  command: systemctl is-active "{{ mysql_service }}"
+  register: mariadb
+  ignore_errors: yes  # Ignore errors in case Apache is not installed on Red Hat/CentOS systems
+  changed_when: false
+    
+- name: display {{ mysql_service }} status
+  debug:
+    msg: "{{ mysql_service }} is {{ 'installed' if mariadb.rc == 0 else 'not installed' }}"
