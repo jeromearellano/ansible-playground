@@ -1,8 +1,0 @@
-[webservers]
-web01 ansible_host=192.168.1.10
-
-[targetplayground]
-target01 ansible_host=192.168.100.24
-
-[databases]
-db01 ansible_host=192.168.1.20
