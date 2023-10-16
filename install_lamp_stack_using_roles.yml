@@ -1,0 +1,15 @@
+---
+- name: install apache and php
+  hosts: webserver
+  become: yes
+  roles:
+    - webserver
+
+- name: install MySQL (Maria DB)
+  hosts: dbserver
+  become: yes
+  roles:
+    - dbserver
+    
+
+    

@@ -1,0 +1,15 @@
+- name: install "{{ mysql_package }}"
+  package:
+    name: "{{ mysql_package }}"
+    state: present
+
+- name: start and enable "{{ mysql_package }}"
+  service:
+    name: "{{ mysql_service }}"
+    state: started
+    enabled: yes
+
+- name: restart mysql
+  service:
+    name: "{{ mysql_service }}"
+    state: restarted

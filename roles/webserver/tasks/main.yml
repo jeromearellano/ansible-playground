@@ -1,0 +1,27 @@
+- name: install "{{ httpd_package }}"
+  package:
+    name: "{{ httpd_package }}"
+    state: present
+
+- name: start and enable "{{ httpd_package }}"
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+
+- name: install "{{ php_package }}"
+  package:
+    name: "{{ php_package }}"
+    state: present
+
+- name: install "{{ php_package }}" modules
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ php_modules }}"
+    
+
+- name: restart "{{ httpd_package }}"
+  service:
+    name: "{{ httpd_package }}"
+    state: restarted

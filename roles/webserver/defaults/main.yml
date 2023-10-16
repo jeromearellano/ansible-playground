@@ -1,0 +1,10 @@
+---
+httpd_package: httpd
+php_package: php
+php_modules:
+  - php-mysqlnd  # Use php-mysqlnd instead of php-mysql
+  - php-xml
+  - php-json
+  - php-gd
+  - php-mbstring
+  - php-curl
