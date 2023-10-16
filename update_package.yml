@@ -1,13 +1,9 @@
 ---
 - name: Update All Packages on CentOS Servers
-  hosts: targetplayground
+  hosts: all
   become: yes  # Use become to execute tasks with sudo or as root
   gather_facts: false
-  tasks:
-    - name: Set sudo password
-      set_fact:
-        ansible_become_pass: labuser
-        
+  tasks:   
     - name: Update All Packages
       yum:
         name: '*'

@@ -1,6 +1,6 @@
 ---
 - name: exercise 01 display hello world on target host
-  hosts: targetplayground
+  hosts: all
   become: false
   gather_facts: false
   tasks:

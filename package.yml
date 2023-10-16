@@ -1,13 +1,9 @@
 ---
 - name: exercise 02 Install Apache on Red Hat/CentOS
-  hosts: targetplayground
+  hosts: webserver
   become: yes  # Use become to execute tasks with sudo or as root
   gather_facts: false
   tasks:
-    - name: Set sudo password
-      set_fact:
-        ansible_become_pass: labuser
-
     - name: Install Apache package
       yum:
         name: httpd
